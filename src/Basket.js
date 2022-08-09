@@ -54,14 +54,7 @@ const Basket = () => {
       transition: Slide,
     });
   };
-  const setNewprice = (index) => {
-    dispatch(
-      lastPrice(
-        index,
-        price.map((item, ind) => ind === index && item.toFixed(2))
-      )
-    );
-  };
+
   useEffect(() => {}, []);
   return (
     <>
@@ -104,7 +97,6 @@ const Basket = () => {
                         item?.qty < item?.countInStock &&
                           dispatch(PlusQty(index));
                         loadQty(item);
-                        setIndexItem(index);
                       }}
                       style={{
                         minWidth: "0px",
@@ -124,7 +116,6 @@ const Basket = () => {
                         setQuanity(item?.qty);
                         item?.qty > 1 && dispatch(MinusQty(index));
                         loadQty(item);
-                        setIndexItem(index);
                       }}
                       style={{
                         minWidth: "0px",
@@ -174,7 +165,6 @@ const Basket = () => {
                             token: userToken,
                           },
                         });
-                    setNewprice(indexItem);
                   }}
                   className="btn btn-login"
                 >

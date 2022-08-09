@@ -115,31 +115,20 @@ export const changePwd = (pwd, name, email, token) => async (dispatch) => {
   }
 };
 
-export const PlusQty = (index) => (dispatch, getstate) => {
-  const {
-    basket: { buybasket },
-  } = getstate();
-  const help = [...buybasket];
+export const PlusQty = ( index) => (dispatch, getstate) => {
+  const localBasket = JSON.parse(localStorage.getItem("basket"));
+  const help = [...localBasket];
   help[index].qty += 1;
+  // help[index].price = item?.price * item.qty;
   localStorage.setItem("basket", JSON.stringify(help));
 };
-export const MinusQty = (index) => (dispatch, getstate) => {
-  const {
-    basket: { buybasket },
-  } = getstate();
-  const help = [...buybasket];
+export const MinusQty = ( index) => (dispatch, getstate) => {
+  const localBasket = JSON.parse(localStorage.getItem("basket"));
+  const help = [...localBasket];
   help[index].qty -= 1;
   localStorage.setItem("basket", JSON.stringify(help));
 };
 
-export const lastPrice = (index, itemPrice) => (dispatch, getstate) => {
-  console.log(itemPrice);
-  const localBasket = JSON.parse(localStorage.getItem("basket"));
-  const help = [...localBasket];
-  help[index].price = itemPrice
-  localStorage.setItem("finalOrder", JSON.stringify(help));
-  console.log(help)
-};
 export const showfactor =
   (orders, totalprice, token, address) => async (dispatch, getstate) => {
     dispatch({ type: orderLoading, payload: { ...getstate(), done: false } });
@@ -178,4 +167,4 @@ export const showfactor =
       });
     }
   };
-  // .filter((e) => e !== false);
+// .filter((e) => e !== false);
