@@ -1,0 +1,15 @@
+export const success = "success";
+export const loading = "loading";
+export const error = "error";
+export const Error = "Error";
+export const ErrorLogin = "ErrorLogin";
+export const successLogin = "successLogin";
+export const signupsuccess = "signupsuccess";
+export const loginLoading = "loginLoading";
+export const addToBasket = "addToBasket";
+export const removeFromBasket = "removeFromBasket";
+export const Errorsignup = "Errorsignup";
+export const Editqty = "Editqty";
+export const orderDone = "orderDone";
+export const orderError = "orderError";
+export const orderLoading = "orderLoading";

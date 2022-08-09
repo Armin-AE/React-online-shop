@@ -1,0 +1,5 @@
+button blue: #00A8E8;
+btn green:#00F5D4;
+secondory color:#293241;
+star:#FFBE0B
+product border:#dee2e6;
