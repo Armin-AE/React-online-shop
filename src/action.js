@@ -115,16 +115,20 @@ export const changePwd = (pwd, name, email, token) => async (dispatch) => {
   }
 };
 
-export const PlusQty = ( index) => (dispatch, getstate) => {
-  const localBasket = JSON.parse(localStorage.getItem("basket"));
-  const help = [...localBasket];
+export const PlusQty = (index) => (dispatch, getstate) => {
+  const {
+    basket: { buybasket },
+  } = getstate();
+  const help = [...buybasket];
   help[index].qty += 1;
   // help[index].price = item?.price * item.qty;
   localStorage.setItem("basket", JSON.stringify(help));
 };
-export const MinusQty = ( index) => (dispatch, getstate) => {
-  const localBasket = JSON.parse(localStorage.getItem("basket"));
-  const help = [...localBasket];
+export const MinusQty = (index) => (dispatch, getstate) => {
+  const {
+    basket: { buybasket },
+  } = getstate();
+  const help = [...buybasket];
   help[index].qty -= 1;
   localStorage.setItem("basket", JSON.stringify(help));
 };
@@ -167,4 +171,4 @@ export const showfactor =
       });
     }
   };
-// .filter((e) => e !== false);
+

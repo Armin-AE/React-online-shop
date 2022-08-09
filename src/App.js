@@ -10,6 +10,7 @@ import Basket from "./Basket";
 import Setting from "./Setting";
 import Address from "./Address";
 import Notfound from "./Notfound";
+import Factor from "./Factor";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/setting" element={<Setting />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/basket" element={<Basket />} />
+        <Route path="/factor" element={<Factor />} />
         <Route path="/address" element={<Address />} />
       </Routes>
     </>

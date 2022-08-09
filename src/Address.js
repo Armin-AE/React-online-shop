@@ -7,9 +7,6 @@ import { Modal, Box, Typography } from "@mui/material";
 const Address = () => {
   const { orderData, Error, done } = useSelector((state) => state.factor);
   const { state } = useLocation();
-  const localBasket = JSON.parse(localStorage.getItem("basket"));
-  const finalOrder = JSON.parse(localStorage.getItem("finalOrder"));
-  console.log(finalOrder);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [fulladdress, setAddress] = useState({
@@ -26,31 +23,11 @@ const Address = () => {
   });
   const [onedit, setOnedit] = useState(false);
   const [btndisable, setBtndisable] = useState(true);
-  const [open, setOpen] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
   ///////////////////////////////
-  let orders = [];
-  localBasket.map((item) => {
-    orders.push({
-      product: item._id,
-      name: item.name,
-      image: item.image,
-      price: item.price,
-      countInStock: item.countInStock,
-      qty: item.qty,
-    });
-  });
 
   const handlesubmit = (e) => {
     e.preventDefault();
-
-    handleOpen();
-
-    !btndisable &&
-      dispatch(showfactor(orders, state.totalprice, state.token, fulladdress));
+      navigate("/factor" , {state:{address : fulladdress}})
   };
   const addressError = () => {
     !fulladdress?.address?.length || fulladdress?.address?.length < 4
@@ -140,22 +117,6 @@ const Address = () => {
 
   return (
     <>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box className="modal-mui" sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Orders
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box>
-      </Modal>
-
       <div className="address-cont">
         <div className="address-card">
           <form onSubmit={(e) => handlesubmit(e)}>
@@ -284,6 +245,7 @@ const Address = () => {
               <button
                 disabled={btndisable === true ? true : false}
                 className="btn btn-login"
+                
               >
                 Next
               </button>

@@ -1,6 +1,5 @@
 import {
-  Button,
-  getListItemSecondaryActionClassesUtilityClass,
+  Button
 } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -12,11 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { removeProduct, PlusQty, MinusQty, lastPrice } from "./action";
 import { useState, useEffect } from "react";
 const Basket = () => {
-  const [newPricee, setprice] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [quanity, setQuanity] = useState(0);
-  const [indexItem, setIndexItem] = useState(0);
   const { buybasket } = useSelector((state) => state.basket);
   const localBasket = JSON.parse(localStorage.getItem("basket"));
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
