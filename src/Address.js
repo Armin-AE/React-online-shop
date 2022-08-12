@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { showfactor } from "./action";
-import { Modal, Box, Typography } from "@mui/material";
 const Address = () => {
-  const { orderData, Error, done } = useSelector((state) => state.factor);
   const { state } = useLocation();
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [fulladdress, setAddress] = useState({
     address: "",
@@ -21,13 +16,11 @@ const Address = () => {
     postcode: false,
     phone: false,
   });
-  const [onedit, setOnedit] = useState(false);
   const [btndisable, setBtndisable] = useState(true);
   ///////////////////////////////
-
   const handlesubmit = (e) => {
     e.preventDefault();
-      navigate("/factor" , {state:{address : fulladdress}})
+      navigate("/factor" , {state:{address : fulladdress ,totalprice : state.totalprice}})
   };
   const addressError = () => {
     !fulladdress?.address?.length || fulladdress?.address?.length < 4
@@ -103,16 +96,6 @@ const Address = () => {
     errors.postcode,
     errors.phone,
   ]);
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
   /////////////////////
 
   return (
@@ -238,8 +221,8 @@ const Address = () => {
               style={{
                 width: "100%",
                 display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "row-reverse",
+                justifyContent: "flex-end",
+                
               }}
             >
               <button
@@ -248,15 +231,6 @@ const Address = () => {
                 
               >
                 Next
-              </button>
-              <button
-                className="btn btn-signup"
-                onClick={() => navigate("/basket")}
-                onMouseOver={() => setOnedit(true)}
-                onMouseOut={() => setOnedit(false)}
-              >
-                Edit
-                {onedit && <p className="showmsg">Edit basket</p>}
               </button>
             </div>
           </form>

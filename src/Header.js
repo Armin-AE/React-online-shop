@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import "font-awesome/css/font-awesome.min.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux/es/exports";
 import { Button, Menu, MenuItem, Badge } from "@mui/material";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { getOrders } from "./action";
+import { useDispatch } from "react-redux";
 const Header = () => {
   const navigate = useNavigate();
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -59,7 +60,7 @@ const Header = () => {
               !localGetuserinfo?.length && navigate("/login");
             }}
           >
-            {localGetuserinfo?.length ? (
+            {localGetuserinfo?.length && localGetuserinfo[0]?.token ? (
               <PopupState variant="popover" popupId="demo-popup-menu">
                 {(popupState) => (
                   <React.Fragment>
@@ -79,11 +80,20 @@ const Header = () => {
                       >
                         Setting
                       </MenuItem>
-                      <MenuItem onClick={popupState.close}>Orders</MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/orders" , {state:localGetuserinfo[0].token});
+                          
+
+                          popupState.close();
+                        }}
+                      >
+                        Orders
+                      </MenuItem>
                       <MenuItem
                         onClick={() => {
                           logoutUser();
-                          navigate(0);
+                          navigate("/");
                         }}
                       >
                         Logout

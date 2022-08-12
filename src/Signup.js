@@ -115,7 +115,7 @@ const Signup = () => {
         ""
       )}
       <div className="signup-cont">
-        <div className={setuser?.length ? "modalActive" : "signup-card"}>
+        <div className={setuser?.length ? "modalActive" : "login-card"}>
           <form
             noValidate
             onSubmit={(e) => {

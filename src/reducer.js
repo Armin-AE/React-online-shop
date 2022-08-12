@@ -5,12 +5,15 @@ import {
   successLogin,
   signupsuccess,
   loginLoading,
-  addToBasket,
   Errorsignup,
   ErrorLogin,
   orderDone,
   orderError,
   orderLoading,
+  clearbasket,
+  clearOrder,
+  GetOrders,
+  getDetail
 } from "./constants";
 export const Products = (
   state = { product: [], loading: false, error: "" },
@@ -65,8 +68,8 @@ export const signUpUser = (
 
 export const basket = (state = { buybasket: [] }, { type, payload }) => {
   switch (type) {
-    case addToBasket:
-      state.buybasket.push(payload);
+    case clearbasket:
+      state.buybasket = payload;
     default:
       return state;
   }
@@ -83,7 +86,24 @@ export const factor = (
       return payload;
     case orderError:
       return payload;
+    case clearOrder:
+      state.orderData = payload;
     default:
       return state;
+  }
+};
+
+export const Orders = (state = { orderHistory: [] , OrderDetail:[]}, { type, payload }) => {
+  switch (type) {
+    case GetOrders:
+      return payload;
+      
+    case getDetail:
+      return payload;
+      
+
+    default:
+      return state;
+      break;
   }
 };

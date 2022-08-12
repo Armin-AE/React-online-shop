@@ -1,6 +1,4 @@
-import {
-  Button
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { Remove, Add } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +6,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { removeProduct, PlusQty, MinusQty, lastPrice } from "./action";
-import { useState, useEffect } from "react";
+import { removeProduct, PlusQty, MinusQty } from "./action";
+import { useState } from "react";
 const Basket = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,14 +15,12 @@ const Basket = () => {
   const { buybasket } = useSelector((state) => state.basket);
   const localBasket = JSON.parse(localStorage.getItem("basket"));
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
-  let userToken = localGetuserinfo[0]?.token;
 
   //////////////////
   const loadQty = (item) => {
     item?.qty === item?.countInStock && navigate("/basket");
     item?.qty === 1 && navigate("/basket");
   };
-
   const removeProductLocal = (index) => {
     const help = [...localBasket];
     help.splice(index, 1);
@@ -51,12 +47,9 @@ const Basket = () => {
       transition: Slide,
     });
   };
-
-  useEffect(() => {}, []);
   return (
     <>
       <ToastContainer />
-
       <div className="basket-cont">
         <div className="basket-card">
           {localBasket?.length ? (
@@ -159,7 +152,6 @@ const Basket = () => {
                       : navigate("/address", {
                           state: {
                             totalprice: price.reduce(total).toFixed(2),
-                            token: userToken,
                           },
                         });
                   }}

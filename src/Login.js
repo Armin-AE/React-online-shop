@@ -12,10 +12,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState({ email: "" });
+  const [errorlogin, setErrorlogin] = useState(false);
   const [password, setPassword] = useState({
     password: "",
   });
-  const [errorlogin, setErrorlogin] = useState(false);
   /////////////////
   const { Error, loginLoading } = useSelector((state) => state.loginUser);
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
@@ -28,7 +28,6 @@ const Login = () => {
   const EmailRegex = emailregex.test(email.email);
   const PassRegex = passregex.test(password.password);
   ////////////////////////////////////////
-
   useEffect(() => {
     if (EmailRegex && PassRegex) {
       setSuccess(true);
@@ -41,7 +40,10 @@ const Login = () => {
   }, [email.email, password.password, errorlogin, Error, success]);
   const handlesubmit = (e) => {
     e.preventDefault();
-    success && dispatch(setLogin(email.email, password.password));
+    success && dispatch(setLogin(email.email, password.password)).then(function(){
+      window.location.reload();
+       
+    });
   };
   return (
     <>
@@ -61,7 +63,7 @@ const Login = () => {
               className="modalanime"
               style={{ color: "green", fontSize: "70px", fontWeight: "300" }}
             />
-            <p className="modalanime" style={{ fontSize: "24px" }}>
+            <p className="modalanime  modal-resp" style={{ fontSize: "24px" }}>
               You have successfully Logged in!
             </p>
             <button

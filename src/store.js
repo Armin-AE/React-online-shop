@@ -3,7 +3,14 @@ import {
   applyMiddleware,
   combineReducers,
 } from "redux";
-import { Products, loginUser, signUpUser, basket, factor } from "./reducer";
+import {
+  Products,
+  loginUser,
+  signUpUser,
+  basket,
+  factor,
+  Orders,
+} from "./reducer";
 import thunk from "redux-thunk";
 const reducers = combineReducers({
   Products: Products,
@@ -11,6 +18,7 @@ const reducers = combineReducers({
   signUpUser: signUpUser,
   basket: basket,
   factor: factor,
+  Orders: Orders,
 });
 const localBasket = JSON.parse(localStorage.getItem("basket"))?.length
   ? JSON.parse(localStorage.getItem("basket"))

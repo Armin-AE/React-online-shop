@@ -13,3 +13,7 @@ export const Editqty = "Editqty";
 export const orderDone = "orderDone";
 export const orderError = "orderError";
 export const orderLoading = "orderLoading";
+export const clearbasket = "clearbasket";
+export const clearOrder = "clearOrder";
+export const GetOrders = "GetOrders";
+export const getDetail = "getDetail";

@@ -5,12 +5,15 @@ import {
   successLogin,
   signupsuccess,
   loginLoading,
-  addToBasket,
   ErrorLogin,
   Errorsignup,
   orderDone,
   orderError,
   orderLoading,
+  clearbasket,
+  clearOrder,
+  GetOrders,
+  getDetail,
 } from "./constants";
 export const getData = () => async (dispatch) => {
   dispatch({ type: loading, payload: { loading: true } });
@@ -76,17 +79,12 @@ export const setSignup = (name, email, pwd) => async (dispatch) => {
   }
 };
 
-export const addtobasket = (product) => (dispatch, getstate) => {
-  const {
-    basket: { buybasket },
-  } = getstate();
-  dispatch({
-    type: addToBasket,
-    payload: product,
-  });
-  localStorage.setItem("basket", JSON.stringify(buybasket));
+export const addtobasket = (product, buybasket) => (dispatch, getstate) => {
+  const help = buybasket;
+  help.push(product);
+  localStorage.setItem("basket", JSON.stringify(help));
 };
-export const removeProduct = (buybasket, index) => (dispatch, getstate) => {
+export const removeProduct = (buybasket, index) => () => {
   const help = buybasket;
   help.splice(index, 1);
 };
@@ -121,7 +119,6 @@ export const PlusQty = (index) => (dispatch, getstate) => {
   } = getstate();
   const help = [...buybasket];
   help[index].qty += 1;
-  // help[index].price = item?.price * item.qty;
   localStorage.setItem("basket", JSON.stringify(help));
 };
 export const MinusQty = (index) => (dispatch, getstate) => {
@@ -134,7 +131,8 @@ export const MinusQty = (index) => (dispatch, getstate) => {
 };
 
 export const showfactor =
-  (orders, totalprice, token, address) => async (dispatch, getstate) => {
+  (orders, totalprice, token, address, payment, shipPrice, finalPrice) =>
+  async (dispatch, getstate) => {
     dispatch({ type: orderLoading, payload: { ...getstate(), done: false } });
     try {
       const { data } = await axios.post(
@@ -147,10 +145,10 @@ export const showfactor =
             postalCode: address.postcode,
             phone: address.phone,
           },
-          paymentMethod: "online",
+          paymentMethod: payment,
           itemsPrice: totalprice,
-          shippingPrice: "0.00",
-          totalPrice: totalprice,
+          shippingPrice: shipPrice,
+          totalPrice: finalPrice,
         },
         {
           headers: {
@@ -163,7 +161,6 @@ export const showfactor =
         type: orderDone,
         payload: { done: true, orderData: [data], Error: "" },
       });
-      console.log(data);
     } catch (error) {
       dispatch({
         type: orderError,
@@ -172,3 +169,38 @@ export const showfactor =
     }
   };
 
+export const clearBasket = () => (dispatch) => {
+  dispatch({ type: clearbasket, payload: [] });
+  dispatch({ type: clearOrder, payload: [] });
+};
+
+export const getOrders = (token) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      "http://5.161.141.215:5000/api/orders/myorders",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    dispatch({ type: GetOrders, payload: { OrdersHistory: [...data] } });
+  } catch (error) {}
+};
+
+export const orderDetail = (id, token) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      `http://5.161.141.215:5000/api/orders/${id}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    dispatch({type:getDetail , payload:{OrderDetail:[data]}})
+    console.log(data);
+  } catch (error) {}
+};

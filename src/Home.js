@@ -9,6 +9,7 @@ import { CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Star } from "@mui/icons-material";
 const Home = () => {
+
   const dispatch = useDispatch();
   const { product, loading, error } = useSelector((state) => state.Products);
   const navigate = useNavigate();

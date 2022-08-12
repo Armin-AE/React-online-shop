@@ -1,7 +1,7 @@
 import React from "react";
 import "font-awesome/css/font-awesome.min.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch , useSelector } from "react-redux";
 import { Star } from "@mui/icons-material";
 import { addtobasket } from "./action";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ const Productpage = () => {
   /////////////////
   const [Include, setInclude] = useState(false);
   const localBasket = JSON.parse(localStorage.getItem("basket"));
+  const { buybasket } = useSelector((state) => state.basket);
   /////////////////////
   const includeCheck = () => {
     localBasket?.map((item) => {
@@ -60,8 +61,7 @@ const Productpage = () => {
                     state.qty = 1;
                     setInclude(true);
                     includeCheck();
-                    dispatch(addtobasket(state));
-                    
+                    dispatch(addtobasket(state,buybasket));
                     navigate(`/product/${state?._id?.toString()}`, {
                       state: state,
                     });
