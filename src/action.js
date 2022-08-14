@@ -34,7 +34,12 @@ export const getData = () => async (dispatch) => {
 export const setLogin = (email, password) => async (dispatch, getState) => {
   dispatch({
     type: loginLoading,
-    payload: { ...getState(), loginLoading: true },
+    payload: {
+      ...getState(),
+      loginLoading: true,
+
+      userLoggedIn: false,
+    },
   });
   try {
     const { data } = await axios.post(
@@ -50,6 +55,7 @@ export const setLogin = (email, password) => async (dispatch, getState) => {
       payload: {
         loginLoading: false,
         user: [data],
+        userLoggedIn: true,
         usertoken: data.token,
         Error: "",
       },
@@ -59,7 +65,11 @@ export const setLogin = (email, password) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: ErrorLogin,
-      payload: { loginLoading: false, Error: "Invalid Email or Password" },
+      payload: {
+        loginLoading: false,
+        Error: "Invalid Email or Password",
+        userLoggedIn: false,
+      },
     });
   }
 };
@@ -200,7 +210,7 @@ export const orderDetail = (id, token) => async (dispatch) => {
         },
       }
     );
-    dispatch({type:getDetail , payload:{OrderDetail:[data]}})
+    dispatch({ type: getDetail, payload: { OrderDetail: [data] } });
     console.log(data);
   } catch (error) {}
 };

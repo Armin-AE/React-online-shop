@@ -17,7 +17,9 @@ const Login = () => {
     password: "",
   });
   /////////////////
-  const { Error, loginLoading } = useSelector((state) => state.loginUser);
+  const { userLoggedIn, Error, loginLoading } = useSelector(
+    (state) => state.loginUser
+  );
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
 
   //////////////////////////////////////////
@@ -40,11 +42,16 @@ const Login = () => {
   }, [email.email, password.password, errorlogin, Error, success]);
   const handlesubmit = (e) => {
     e.preventDefault();
-    success && dispatch(setLogin(email.email, password.password)).then(function(){
-      window.location.reload();
-       
-    });
+    {
+      success && dispatch(setLogin(email.email, password.password));
+    }
   };
+  // window.location.reload()
+
+  const LoggedIn = () => {
+    userLoggedIn && window.location.reload();
+  };
+  LoggedIn();
   return (
     <>
       {localGetuserinfo?.length && (

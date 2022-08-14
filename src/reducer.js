@@ -34,7 +34,7 @@ export const Products = (
   }
 };
 export const loginUser = (
-  state = { user: [], usertoken: "", Error: "", loginLoading: false },
+  state = { user: [], usertoken: "", Error: "", loginLoading: false , userLoggedIn:false},
   { type, payload }
 ) => {
   switch (type) {
