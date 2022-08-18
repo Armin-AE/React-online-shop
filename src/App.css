@@ -489,20 +489,22 @@ input[type=number] {
   flex-direction: column;
   width: 100%;
   border-bottom: rgba(245, 245, 245, 0.151) 1px solid;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .factor-orders {
   display: flex;
-  justify-content: left;
+  gap: 10px;
 }
 
 .factor-img {
   border-radius: 7px;
-  width: 40%;
-  margin-right: 10px;
+  width: 100%;
+  
 }
-
+.factor-order-items{
+  width: 15%;
+}
 .factor-qty {
   font-size: small;
   border: 1px solid #7a7c94;
@@ -562,16 +564,21 @@ input[type=number] {
   width: 100%;
 }
 
+.order-detail-items {
+  display: flex;
+  gap: 13px;
+}
+
 .order-detail-img {
-  border-radius: 7px;
-  width: 60%;
+  width: 45%;
   display: flex;
   align-items: center;
 }
-.orderSelfImg{
+
+.orderSelfImg {
   width: 20%;
   border-radius: 5px;
-  
+
 }
 
 .orderPage-img {
@@ -580,6 +587,7 @@ input[type=number] {
   gap: 5px;
 
 }
+
 .orderDetail-qty {
   width: fit-content;
   padding: 0 5px;
@@ -754,13 +762,12 @@ input[type=number] {
 
   .factor-orders-cont {
     align-items: center;
+    padding-bottom: 5px;
   }
-
-  .factor-orders {
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    grid-gap: 10px;
+  .factor-order-items{
+    width: 30%;
   }
+  .factor-orders{flex-wrap: wrap;}
 
   .btnGap {
     gap: 20px;
@@ -773,6 +780,10 @@ input[type=number] {
 
   }
 
+  .order-detail-items {
+    display: block;
+  }
+
   .orderPage-img {
     width: 85%;
     display: flex;
@@ -780,10 +791,10 @@ input[type=number] {
 
   }
 
-.orderSelfImg{
-  width: 40%;
-  border-radius: 5px;
-}
+  .orderSelfImg {
+    width: 40%;
+    border-radius: 5px;
+  }
 
   .col-resp {
     flex-direction: column-reverse;
@@ -810,10 +821,10 @@ input[type=number] {
 
   }
 
-.orderSelfImg{
-  width: 40%;
-  border-radius: 5px;
-}
+  .orderSelfImg {
+    width: 40%;
+    border-radius: 5px;
+  }
 
   .product-cont {
     display: flex;
@@ -957,16 +968,19 @@ input[type=number] {
     width: 50%;
 
   }
+  .factor-orders-cont {
+  
+    padding-bottom: 5px;
+  }
+  .factor-order-items{
+    width: 25%;
+  }
 
   .factor-img {
     width: 100%;
   }
 
-  .factor-orders {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-gap: 10px;
-  }
+
 
   .order-detail-img {
     border-radius: 7px;
@@ -982,11 +996,13 @@ input[type=number] {
   .col-resp {
     flex-direction: initial;
     align-items: baseline;
-    
+
   }
-.orderDself{
-  align-items: baseline;
-}
+
+  .orderDself {
+    align-items: baseline;
+  }
+
   .input-login {
     font-size: large;
   }

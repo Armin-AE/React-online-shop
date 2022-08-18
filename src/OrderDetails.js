@@ -91,12 +91,12 @@ const OrderDetails = () => {
                   {item.orderItems.map((order, indx) => (
                     <div key={indx}>
                       <div
-                        className="borderTop"
-                        style={{ display: "flex", gap: "13px" }}
+                        className="borderTop order-detail-items"
+                        
                       >
                         <div className="order-detail-img">
                         <img
-                          className="order-detail-img"
+                          style={{width:"100%",borderRadius:"10px"}}
                           src={order.image}
                           alt=""
                         />

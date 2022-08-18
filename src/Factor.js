@@ -64,7 +64,7 @@ const Factor = () => {
               <div className="factor-orders-cont">
                 <div className="factor-orders">
                   {orders?.map((item, index) => (
-                    <div key={index} >
+                    <div className="factor-order-items" key={index} >
                       <img className="factor-img" src={item.image} alt="" />
                       <p className="factor-qty">{item.qty}</p>
                     </div>
