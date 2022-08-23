@@ -80,6 +80,26 @@ const Basket = () => {
                     </div>
                   </div>
                   <div className="basket-rightside">
+                  
+                    <Button
+                      disabled={item?.qty === 1}
+                      onClick={() => {
+                        setQuanity(item?.qty);
+                        item?.qty > 1 && dispatch(MinusQty(index));
+                        loadQty(item);
+                      }}
+                      style={{
+                        minWidth: "0px",
+                        minHeight: "0px",
+                        border: "#00a8e8 solid 1px",
+                        color: "white",
+                        width: "50px",
+                      }}
+                      variant="outlined"
+                    >
+                      <Remove fontSize="small" />
+                    </Button>
+                    <p style={{ fontSize: "26px" }}>{item?.qty}</p>
                     <Button
                       disabled={item?.qty === item?.countInStock}
                       onClick={() => {
@@ -98,25 +118,6 @@ const Basket = () => {
                       variant="outlined"
                     >
                       <Add fontSize="small" />
-                    </Button>
-                    <p style={{ fontSize: "26px" }}>{item?.qty}</p>
-                    <Button
-                      disabled={item?.qty === 1}
-                      onClick={() => {
-                        setQuanity(item?.qty);
-                        item?.qty > 1 && dispatch(MinusQty(index));
-                        loadQty(item);
-                      }}
-                      style={{
-                        minWidth: "0px",
-                        minHeight: "0px",
-                        border: "#00a8e8 solid 1px",
-                        color: "white",
-                        width: "50px",
-                      }}
-                      variant="outlined"
-                    >
-                      <Remove fontSize="small" />
                     </Button>
                     <DeleteIcon
                       className="basket-deleteicon"

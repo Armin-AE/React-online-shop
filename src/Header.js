@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import "font-awesome/css/font-awesome.min.css";
@@ -6,16 +6,26 @@ import { useNavigate } from "react-router-dom";
 import { Button, Menu, MenuItem, Badge } from "@mui/material";
 import PopupState, { bindTrigger, bindMenu } from "material-ui-popup-state";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { getOrders } from "./action";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { userAuth } from "./action";
+
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userAuthCheck } = useSelector((state) => state.loginUser);
+
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
   const localBasket = JSON.parse(localStorage.getItem("basket"));
   function logoutUser() {
     localStorage.removeItem("userinfo");
     localStorage.removeItem("userData");
+    localGetuserinfo?.length && dispatch(userAuth(localGetuserinfo[0]?.token));
+    navigate("/");
+    window.location.reload();
   }
+  useEffect(() => {
+    localGetuserinfo?.length && dispatch(userAuth(localGetuserinfo[0]?.token));
+  }, []);
   return (
     <>
       <div className="header">
@@ -57,10 +67,10 @@ const Header = () => {
 
           <p
             onClick={() => {
-              !localGetuserinfo?.length && navigate("/login");
+              !userAuthCheck && navigate("/login");
             }}
           >
-            {localGetuserinfo?.length && localGetuserinfo[0]?.token ? (
+            {userAuthCheck ? (
               <PopupState variant="popover" popupId="demo-popup-menu">
                 {(popupState) => (
                   <React.Fragment>
@@ -68,7 +78,9 @@ const Header = () => {
                       style={{ color: "white" }}
                       {...bindTrigger(popupState)}
                     >
-                      {localGetuserinfo?.length && localGetuserinfo[0]?.name}
+                      {localGetuserinfo?.length &&
+                        userAuthCheck &&
+                        localGetuserinfo[0]?.name}
                       <ArrowDropDownIcon />
                     </Button>
                     <Menu {...bindMenu(popupState)}>
@@ -82,8 +94,9 @@ const Header = () => {
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
-                          navigate("/orders" , {state:localGetuserinfo[0].token});
-                          
+                          navigate("/orders", {
+                            state: localGetuserinfo[0].token,
+                          });
 
                           popupState.close();
                         }}
@@ -93,7 +106,6 @@ const Header = () => {
                       <MenuItem
                         onClick={() => {
                           logoutUser();
-                          navigate("/");
                         }}
                       >
                         Logout

@@ -4,12 +4,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getOrders } from "./action";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import { LinearProgress  } from "@mui/material";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 const OrdersHistory = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
-  const { OrdersHistory } = useSelector((state) => state.Orders);
+  const { OrdersHistory ,loadingHistory} = useSelector((state) => state.Orders);
   useEffect(() => {
     dispatch(getOrders(state));
   }, []);
@@ -19,7 +20,16 @@ const OrdersHistory = () => {
       <div className="basket-cont">
         <div className="basket-card">
           <p className="headTitles">Orders History</p>
-          {OrdersHistory?.length ? (
+          {loadingHistory ? 
+          
+          (
+             
+              <LinearProgress  color="inherit"/> 
+          )
+        
+        :
+        
+          OrdersHistory?.length ? (
             OrdersHistory?.map((item, index) => (
               <div key={index} className="item-cont">
                 <div className="items">
@@ -45,11 +55,11 @@ const OrdersHistory = () => {
                     {item.orderItems.map((img, indx) => (
                       <img
                         key={indx}
-                         className="orderSelfImg"
+                        className="orderSelfImg"
                         src={img.image}
                         alt=""
-                      />
-                    ))}
+                        />
+                        ))}
                   </div>
                   <p
                     className="borderTop"
@@ -59,7 +69,7 @@ const OrdersHistory = () => {
                         state: { itemId: item._id, token: state },
                       })
                     }
-                  >
+                    >
                     Details
                     <span>
                       <KeyboardArrowRightIcon />
@@ -68,13 +78,15 @@ const OrdersHistory = () => {
                 </div>
               </div>
             ))
-          ) : (
-            <div className="emptybasketcont">
+            ) : (
+              <div className="emptybasketcont">
               <div style={{ display: "flex", alignItems: "center" }}>
                 <p>No orders found!</p>
               </div>
-            </div>
-          )}
+          </div>
+      
+      
+      )}
         </div>
       </div>
     </>

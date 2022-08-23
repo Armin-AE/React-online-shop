@@ -10,6 +10,7 @@ import {
   basket,
   factor,
   Orders,
+  productP,
 } from "./reducer";
 import thunk from "redux-thunk";
 const reducers = combineReducers({
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   basket: basket,
   factor: factor,
   Orders: Orders,
+  productP: productP,
 });
 const localBasket = JSON.parse(localStorage.getItem("basket"))?.length
   ? JSON.parse(localStorage.getItem("basket"))

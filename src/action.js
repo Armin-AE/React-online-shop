@@ -14,6 +14,11 @@ import {
   clearOrder,
   GetOrders,
   getDetail,
+  historyLoad,
+  detailLoad,
+  SuccessP,
+  LoadingP,
+  authCheck,
 } from "./constants";
 export const getData = () => async (dispatch) => {
   dispatch({ type: loading, payload: { loading: true } });
@@ -30,14 +35,27 @@ export const getData = () => async (dispatch) => {
     });
   }
 };
-
+export const productP = (id) => async (dispatch, getstate) => {
+  getData();
+  dispatch({ type: LoadingP, payload: { loading: true } });
+  try {
+    const { data } = await axios.get(
+      `http://5.161.141.215:5000/api/products/${id ? `${id}` : ""}`
+    );
+    dispatch({
+      type: SuccessP,
+      payload: { loading: false, productp: [data] },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 export const setLogin = (email, password) => async (dispatch, getState) => {
   dispatch({
     type: loginLoading,
     payload: {
       ...getState(),
       loginLoading: true,
-
       userLoggedIn: false,
     },
   });
@@ -71,6 +89,23 @@ export const setLogin = (email, password) => async (dispatch, getState) => {
         userLoggedIn: false,
       },
     });
+  }
+};
+export const userAuth = (token) => async (dispatch) => {
+  try {
+    const { data } = await axios.get(
+      "http://5.161.141.215:5000/api/users/profile",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({ type: authCheck, payload: { userAuthCheck: true } });
+  } catch (error) {
+    console.log(error.message);
   }
 };
 export const setSignup = (name, email, pwd) => async (dispatch) => {
@@ -185,6 +220,7 @@ export const clearBasket = () => (dispatch) => {
 };
 
 export const getOrders = (token) => async (dispatch) => {
+  dispatch({ type: historyLoad, payload: { loadingHistory: true } });
   try {
     const { data } = await axios.get(
       "http://5.161.141.215:5000/api/orders/myorders",
@@ -195,11 +231,17 @@ export const getOrders = (token) => async (dispatch) => {
         },
       }
     );
-    dispatch({ type: GetOrders, payload: { OrdersHistory: [...data] } });
-  } catch (error) {}
+    dispatch({
+      type: GetOrders,
+      payload: { loadingHistory: false, OrdersHistory: [...data] },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const orderDetail = (id, token) => async (dispatch) => {
+  dispatch({ type: detailLoad, payload: { LoadingDetail: true } });
   try {
     const { data } = await axios.get(
       `http://5.161.141.215:5000/api/orders/${id}`,
@@ -210,7 +252,11 @@ export const orderDetail = (id, token) => async (dispatch) => {
         },
       }
     );
-    dispatch({ type: getDetail, payload: { OrderDetail: [data] } });
-    console.log(data);
-  } catch (error) {}
+    dispatch({
+      type: getDetail,
+      payload: { LoadingDetail: false, OrderDetail: [data] },
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
 };

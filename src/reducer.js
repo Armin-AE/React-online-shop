@@ -13,7 +13,12 @@ import {
   clearbasket,
   clearOrder,
   GetOrders,
-  getDetail
+  getDetail,
+  historyLoad,
+  detailLoad,
+  SuccessP,
+  LoadingP,
+  ErrorP,authCheck
 } from "./constants";
 export const Products = (
   state = { product: [], loading: false, error: "" },
@@ -33,24 +38,51 @@ export const Products = (
       break;
   }
 };
+export const productP = (
+  state = { productp: [], loading: false, error: "" },
+  { type, payload }
+) => {
+  switch (type) {
+    case SuccessP:
+      return payload;
+
+    case LoadingP:
+      return payload;
+
+    case ErrorP:
+      return payload;
+
+    default:
+      return state;
+      break;
+  }
+};
 export const loginUser = (
-  state = { user: [], usertoken: "", Error: "", loginLoading: false , userLoggedIn:false},
+  state = {
+    user: [],
+    usertoken: "",
+    Error: "",
+    loginLoading: false,
+    userLoggedIn: false,
+    userAuthCheck:false
+  },
   { type, payload }
 ) => {
   switch (type) {
     case successLogin:
       return payload;
-
+    
     case ErrorLogin:
       return payload;
     case loginLoading:
+      return payload;
+    case authCheck:
       return payload;
     default:
       return state;
       break;
   }
 };
-
 export const signUpUser = (
   state = { setuser: [], Errorsignup: "" },
   { type, payload }
@@ -93,14 +125,24 @@ export const factor = (
   }
 };
 
-export const Orders = (state = { orderHistory: [] , OrderDetail:[]}, { type, payload }) => {
+export const Orders = (
+  state = {
+    orderHistory: [],
+    loadingHistory: false,
+    LoadingDetail: false,
+    OrderDetail: [],
+  },
+  { type, payload }
+) => {
   switch (type) {
+    case historyLoad:
+      return payload;
     case GetOrders:
       return payload;
-      
     case getDetail:
       return payload;
-      
+    case detailLoad:
+      return payload;
 
     default:
       return state;

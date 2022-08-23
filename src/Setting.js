@@ -49,19 +49,16 @@ const Setting = () => {
     e.preventDefault();
     Oldpassmatch();
     oldpwdMatch
-    ? dispatch(
-      changePwd(newpwd, userInfo.name, userInfo.email, userInfo.token),
-      navigate("/setting"),
-      showToast()
-      )
+      ? dispatch(
+          changePwd(newpwd, userInfo.name, userInfo.email, userInfo.token),
+          navigate("/setting"),
+          showToast()
+        )
       : setOldpwdError(true);
   };
   useEffect(() => {
-    if (oldpwd.length) {
-      Oldpassmatch();
-    }
-    
-  }, [oldpwd]);
+    Oldpassmatch();
+  }, [oldpwd,oldpwdMatch,oldpwdError]);
   useEffect(() => {
     passmatch();
     Getuser();
@@ -75,7 +72,7 @@ const Setting = () => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      theme:'dark',
+      theme: "dark",
 
       transition: Slide,
     });
@@ -100,6 +97,7 @@ const Setting = () => {
                 placeholder="Enter your old password..."
                 onChange={(e) => {
                   setOldpwd(e.target.value);
+                  setOldpwdError(false)
                 }}
               />
               {oldpwd?.length > 4 && !oldPassRegex ? (

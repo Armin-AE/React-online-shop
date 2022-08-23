@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
-import { Navigate, Route, Routes, useNavigate } from "react-router";
+import { Navigate, Route, Routes, } from "react-router";
 import Header from "./Header";
 import Home from "./Home";
 import Login from "./Login";
@@ -14,10 +14,15 @@ import Factor from "./Factor";
 import OrdersHistory from "./Orders";
 import OrderDetails from "./OrderDetails";
 import { useSelector } from "react-redux";
-
+import { userAuth } from "./action";
+import { useDispatch } from "react-redux";
 const App = () => {
+  const dispatch = useDispatch();
+  const { userAuthCheck } = useSelector((state) => state.loginUser);
   const localGetuserinfo = JSON.parse(localStorage.getItem("userinfo"));
-
+  useEffect(() => {
+    localGetuserinfo?.length && dispatch(userAuth(localGetuserinfo[0]?.token));
+  }, []);
   return (
     <>
       <Header />
@@ -25,25 +30,25 @@ const App = () => {
         <Route
           path="/setting"
           element={
-            !localGetuserinfo?.length ? <Navigate to={"/error"} /> : <Setting />
+            !userAuthCheck ? <Navigate to={"/error"} /> : <Setting />
           }
         />
         <Route
           path="/factor"
           element={
-            !localGetuserinfo?.length ? <Navigate to={"/error"} /> : <Factor />
+            !userAuthCheck ? <Navigate to={"/error"} /> : <Factor />
           }
         />
         <Route
           path="/address"
           element={
-            !localGetuserinfo?.length ? <Navigate to={"/error"} /> : <Address />
+            !userAuthCheck ? <Navigate to={"/error"} /> : <Address />
           }
         />
         <Route
           path="/orders"
           element={
-            !localGetuserinfo?.length ? (
+            !userAuthCheck ? (
               <Navigate to={"/error"} />
             ) : (
               <OrdersHistory />
@@ -53,7 +58,7 @@ const App = () => {
         <Route
           path="/orders/:id"
           element={
-            !localGetuserinfo?.length ? (
+            !userAuthCheck ? (
               <Navigate to={"/error"} />
             ) : (
               <OrderDetails />

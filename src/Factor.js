@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { showfactor, clearBasket } from "./action";
@@ -42,7 +42,7 @@ const Factor = () => {
     Swal.fire({
       icon: "success",
       title: "Order Successfully Placed",
-      text: "Thank you for ordering.",
+      text: "Thank you for ordering",
       allowOutsideClick: false,
       confirmButtonColor: "#00a8e8",
     }).then(function () {
@@ -57,14 +57,18 @@ const Factor = () => {
         Done()
       ) : (
         <div className="basket-cont">
-          
           <div className="factor-card">
-            <p style={{ fontSize: "larger", color: "whitesmoke" }}>Factor</p>
+            <p
+              className="headTitles"
+              style={{ fontSize: "larger", color: "whitesmoke" }}
+            >
+              Factor
+            </p>
             <div className="factor">
               <div className="factor-orders-cont">
                 <div className="factor-orders">
                   {orders?.map((item, index) => (
-                    <div className="factor-order-items" key={index} >
+                    <div className="factor-order-items" key={index}>
                       <img className="factor-img" src={item.image} alt="" />
                       <p className="factor-qty">{item.qty}</p>
                     </div>
@@ -72,7 +76,9 @@ const Factor = () => {
                 </div>
               </div>
               <div className="factor-address">
-                <p style={{ fontSize: "large" }}>Delivery</p>
+                <p className="headTitles" style={{ fontSize: "large" }}>
+                  Delivery
+                </p>
                 <div>
                   Address: {state.address.address}, City: {state.address.city},
                   Post code: {state.address.postcode}, Phone:{" "}
@@ -81,11 +87,11 @@ const Factor = () => {
               </div>
 
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className="payment-method">
+                <div className="payment-method ">
                   <FormControl>
                     <FormLabel
                       id="demo-radio-buttons-group-label"
-                      style={{ color: "whitesmoke" }}
+                      style={{ fontWeight: "600", color: "whitesmoke" }}
                     >
                       Payment
                     </FormLabel>
@@ -128,7 +134,8 @@ const Factor = () => {
                   <p>Total price : ${finalprice}</p>
                 </div>
               </div>
-              <div className="btnGap"
+              <div
+                className="btnGap"
                 style={{
                   width: "100%",
                   display: "flex",
@@ -167,7 +174,7 @@ const Factor = () => {
             </div>
           </div>
         </div>
-        )}
+      )}
     </>
   );
 };

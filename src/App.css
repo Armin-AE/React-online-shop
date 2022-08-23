@@ -179,12 +179,17 @@ button:disabled:hover {
   border-radius: 10px;
   cursor: pointer;
 }
-
+.inBasket-btn{
+  border-radius: 10px;
+  width: max-content;
+  font-size: large;
+  cursor: pointer;
+}
 button:hover {
   opacity: 90%;
 }
 
-.btn:active {
+button:active {
   box-shadow: 0px 0.5px 10px grey;
 }
 
